@@ -1,0 +1,9 @@
+list of emails
+
+email 1)
+username: haikal@gmail.com
+password: abc123
+
+email 2)
+username: user1@gmail.com
+password: abc123
