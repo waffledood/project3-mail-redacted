@@ -53,11 +53,23 @@ function send_email() {
   .then(result => {
       // Print result
       console.log(result);
+      console.log(result.message);
+
+      // 
+      if (result.error) {
+        //
+      } else {
+        // load the "Sent" mailbox
+        load_mailbox('sent');
+      }
+
   });
 
-  // load the "Sent" mailbox
-  load_mailbox('sent')
-
   return false;
+
+  // refer to this guy's solution
+  // https://github.com/Mukheem1603/mail/blob/master/mail/static/mail/compose.js
+  // on second thought, this one looks bad, refer to the reddit one instead
+  // https://www.reddit.com/r/cs50/comments/iufijy/cs50w_project_3_mail/
   
 }
