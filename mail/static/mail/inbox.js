@@ -5,9 +5,11 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
   document.querySelector('#compose').addEventListener('click', compose_email);
-  //document.querySelector('#submit').addEventListener('click', send_email);
-  //document.querySelector('#compose-form').addEventListener('submit', send_email);
-  document.querySelector('#compose-form').onsubmit = send_email;
+  
+  // Compose & send an email
+  document.querySelector('#compose-form').onsubmit = send_email; //document.querySelector('#submit').addEventListener('click', send_email); //document.querySelector('#compose-form').addEventListener('submit', send_email);
+
+  // Load the inbox
 
   // By default, load the inbox
   load_mailbox('inbox');
@@ -33,13 +35,22 @@ function load_mailbox(mailbox) {
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+
+  
+  fetch(`/emails/${mailbox}`)
+  .then(response => response.json())
+  .then(emails => {
+    console.log(emails)
+  });
+  
+
+  return false;
 }
 
 
 
 function send_email() {
   // access the contents of the email
-
   fetch('/emails', {
     method: 'POST',
     body: JSON.stringify({
@@ -55,9 +66,8 @@ function send_email() {
       console.log(result);
       console.log(result.message);
 
-      // 
       if (result.error) {
-        //
+        // 
       } else {
         // load the "Sent" mailbox
         load_mailbox('sent');
@@ -67,8 +77,7 @@ function send_email() {
 
   return false;
 
-  // refer to this guy's solution
-  // https://github.com/Mukheem1603/mail/blob/master/mail/static/mail/compose.js
+  // refer to this guy's solution: https://github.com/Mukheem1603/mail/blob/master/mail/static/mail/compose.js
   // on second thought, this one looks bad, refer to the reddit one instead
   // https://www.reddit.com/r/cs50/comments/iufijy/cs50w_project_3_mail/
   

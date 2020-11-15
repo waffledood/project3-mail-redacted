@@ -1,0 +1,5 @@
+django superuser created
+
+Username: haikal
+email: haikal7797@gmail.com
+password: Bionicle77
