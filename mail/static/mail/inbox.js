@@ -5,14 +5,18 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
   document.querySelector('#compose').addEventListener('click', compose_email);
+
+  // code below is buggy, when if statement is removed, the different email inboxes can't be loaded
+  if (document.querySelector('#email-entry')) {
+    document.querySelector('#email-entry').addEventListener('click', retrieve_email_details, false);
+  }
   
   // Compose & send an email
   document.querySelector('#compose-form').onsubmit = send_email; //document.querySelector('#submit').addEventListener('click', send_email); //document.querySelector('#compose-form').addEventListener('submit', send_email);
 
-  // Load the inbox
-
   // By default, load the inbox
   load_mailbox('inbox');
+
 });
 
 function compose_email() {
@@ -30,8 +34,9 @@ function compose_email() {
 function load_mailbox(mailbox) {
   
   // Show the mailbox and hide other views
+  
   document.querySelector('#emails-view').style.display = 'block';
-  document.querySelector('#compose-view').style.display = 'none';
+  document.querySelector('#compose-view').style.display = 'none'; 
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
@@ -43,17 +48,47 @@ function load_mailbox(mailbox) {
   .then(emails => {
     //console.log(emails);
     emails.forEach(create_email_entry);
+    //emails.forEach(retrieve_email_details);
   });
   
+  return false;
+}
+
+
+function load_email_entry(email_id) {
+
+  const element = document.createElement('div');
+  element.innerHTML = "sample text";
+
+  document.querySelector('#emails-view').append(element);
 
   return false;
 }
 
 
+function retrieve_email_details(email_id) { 
+  //fetch(`/emails/${email_id}`)
+  fetch('/emails/1')
+  .then(response => response.json())
+  .then(email => {
+      // Print email
+      console.log(email);
+
+      // ... do something else with email ...
+  });
+
+  return false;
+}  
+
+
+function create_email_entry_2(item) {
+  item.onclick = load_email_entry(item.id);
+}
+
+
 function create_email_entry(item) {
-  //
   const element = document.createElement('div');
-  element.innerHTML =  "<div>" + item.sender + "  " + item.subject + "  " + item.timestamp + "<div>";
+  element.innerHTML =  "<div>" + item.sender + "  " + item.subject + "  " + item.timestamp + "  " + item.id + "<div>";
   element.style.border = "medium groove #0000FF";
   element.style.borderRadius = "5px";
   if (item.read) {
@@ -64,8 +99,12 @@ function create_email_entry(item) {
   //element.innerHTML += '<a href="'+desiredLink+'">'+desiredText+'</a>'; https://stackoverflow.com/questions/4772774/how-do-i-create-a-link-using-javascript
   element.style.cursor = "pointer";
   // http://www.javascripter.net/faq/stylesc.htm#:~:text=To%20set%20or%20change%20the,in%20that%20element's%20HTML%20tag.)
-  element.onclick = ;
-  https://www.w3schools.com/jsref/event_onclick.asp
+  element.id = "email-entry";
+
+  //element.onclick = load_email_entry(item.id);
+
+  //element.onclick = retrieve_email_details(item.id); 
+  // https://www.w3schools.com/jsref/event_onclick.asp
 
   //element.style.borderRadius = "25px";
   //element.innerHTML =  "<div style=\"border-radius: 25px\">" + item.body + "<div>";
