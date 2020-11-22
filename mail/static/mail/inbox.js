@@ -53,8 +53,12 @@ function load_mailbox(mailbox) {
 function create_email_entry(item) {
   //
   const element = document.createElement('div');
-  element.innerHTML = item;
+  element.innerHTML =  "<div>" + item.sender + "  " + item.body + "  " + item.timestamp + "<div>";
+  element.style.border = "medium groove #0000FF";
+  //element.style.borderRadius = "25px";
+  //element.innerHTML =  "<div style=\"border-radius: 25px\">" + item.body + "<div>";
   document.querySelector('#emails-view').append(element);
+  
 }
 
 
@@ -89,5 +93,6 @@ function send_email() {
   // refer to this guy's solution: https://github.com/Mukheem1603/mail/blob/master/mail/static/mail/compose.js
   // on second thought, this one looks bad, refer to the reddit one instead
   // https://www.reddit.com/r/cs50/comments/iufijy/cs50w_project_3_mail/
+  // helpful link when debugging: https://daveceddia.com/unexpected-token-in-json-at-position-0/
   
 }
