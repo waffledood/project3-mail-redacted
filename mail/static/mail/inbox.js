@@ -55,6 +55,12 @@ function create_email_entry(item) {
   const element = document.createElement('div');
   element.innerHTML =  "<div>" + item.sender + "  " + item.body + "  " + item.timestamp + "<div>";
   element.style.border = "medium groove #0000FF";
+  element.style.borderRadius = "5px";
+  if (item.read) {
+    element.style.backgroundColor = "grey";
+  } else {
+    element.style.backgroundColor = "white";
+  }
   //element.style.borderRadius = "25px";
   //element.innerHTML =  "<div style=\"border-radius: 25px\">" + item.body + "<div>";
   document.querySelector('#emails-view').append(element);
