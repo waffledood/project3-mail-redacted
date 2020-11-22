@@ -53,7 +53,7 @@ function load_mailbox(mailbox) {
 function create_email_entry(item) {
   //
   const element = document.createElement('div');
-  element.innerHTML =  "<div>" + item.sender + "  " + item.body + "  " + item.timestamp + "<div>";
+  element.innerHTML =  "<div>" + item.sender + "  " + item.subject + "  " + item.timestamp + "<div>";
   element.style.border = "medium groove #0000FF";
   element.style.borderRadius = "5px";
   if (item.read) {
@@ -61,6 +61,12 @@ function create_email_entry(item) {
   } else {
     element.style.backgroundColor = "white";
   }
+  //element.innerHTML += '<a href="'+desiredLink+'">'+desiredText+'</a>'; https://stackoverflow.com/questions/4772774/how-do-i-create-a-link-using-javascript
+  element.style.cursor = "pointer";
+  // http://www.javascripter.net/faq/stylesc.htm#:~:text=To%20set%20or%20change%20the,in%20that%20element's%20HTML%20tag.)
+  element.onclick = ;
+  https://www.w3schools.com/jsref/event_onclick.asp
+
   //element.style.borderRadius = "25px";
   //element.innerHTML =  "<div style=\"border-radius: 25px\">" + item.body + "<div>";
   document.querySelector('#emails-view').append(element);
